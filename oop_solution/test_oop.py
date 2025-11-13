@@ -1,24 +1,39 @@
-from library_oop import Book
+from library_oop import Book, Member
 
-print("=== TESTING CLASS: Book ===")
+print("=== TESTING CLASS: Member ===")
 
-b1 = Book(1, "Python Crash Course", "Eric Matthes", 3)
+m1 = Member(101, "Alice Smith", "alice@email.com")
 
-print(f"Title: {b1.title}")
-print(f"Author: {b1.author}")
-print(f"Total copies: {b1.total_copies}")
-print(f"Available copies: {b1.available_copies}")
+b1 = Book(1, "Python Crash Course", "Eric Matthes", 2)
+b2 = Book(2, "Clean Code", "Robert Martin", 1)
 
-print("\n--- Borrowing copies ---")
-b1.borrow_copy()
-b1.borrow_copy()
-print(f"Available copies after 2 borrows: {b1.available_copies}") 
+print("\n--- Member info ---")
+print(f"ID: {m1.id}")
+print(f"Name: {m1.name}")
+print(f"Email: {m1.email}")
+print(f"Borrowed books: {len(m1.borrowed_books)}")
 
-print("\n--- Trying to borrow more than available ---")
-borrow_success = b1.borrow_copy() 
-print(f"Borrow success? {borrow_success}")
-print(f"Available copies now: {b1.available_copies}")
+print("\n--- Borrowing books ---")
+m1.borrow_book(b1)
+m1.borrow_book(b2)
 
-print("\n--- Returning a copy ---")
-b1.return_copy()
-print(f"Available copies after return: {b1.available_copies}")  
+print(f"Books borrowed by {m1.name}:")
+for book in m1.borrowed_books:
+    print(f"  - {book.title}")
+
+print("\n--- Trying to borrow more than 3 books ---")
+b3 = Book(3, "The Pragmatic Programmer", "Hunt & Thomas", 1)
+b4 = Book(4, "Design Patterns", "Gang of Four", 1)
+m1.borrow_book(b3)
+m1.borrow_book(b4)
+
+print(f"\nBorrowed books count: {len(m1.borrowed_books)}")
+
+print("\n--- Returning a book ---")
+m1.return_book(b1)
+print(f"Books remaining after return:")
+for book in m1.borrowed_books:
+    print(f"  - {book.title}")
+
+print("\n--- Returning a book not borrowed ---")
+m1.return_book(b1)
